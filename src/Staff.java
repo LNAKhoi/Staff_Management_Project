@@ -9,7 +9,7 @@ import java.util.Date;
 public class Staff {
     private int ID;
     private String staffName;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private Float Salary;
     private String Gender;
     private String Address;
@@ -21,7 +21,8 @@ public class Staff {
      * Constructor for staffs
      * */
     public Staff (){}
-    public Staff(int ID, String staffName, String dateOfBirth, Float salary, String gender, String address, String position, Date startDate) {
+
+    public Staff(int ID, String staffName, Date dateOfBirth, Float salary, String gender, String address, String position, Date startDate) {
         this.ID = ID;
         this.staffName = staffName;
         this.dateOfBirth = dateOfBirth;
@@ -31,9 +32,6 @@ public class Staff {
         Position = position;
         this.startDate = startDate;
     }
-    /*
-    * Getter and Setter
-    * */
 
     public int getID() {
         return ID;
@@ -51,11 +49,11 @@ public class Staff {
         this.staffName = staffName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

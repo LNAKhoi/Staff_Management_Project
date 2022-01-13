@@ -45,9 +45,60 @@ public class dbHandler {
         }
         return staffList;
     }
-
-    public static void main(String[] args) {
-        List<Staff> temp= new ArrayList<Staff>();
-        temp=getStaff();
+    public static void addStaff(Staff staff) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="INSERT INTO staff (ID,Name,DOB,Salary,Gender,Address,Position,StartDate) VALUES(?,?,?,?,?,?,?,?)";
+            statement=con.prepareStatement(sqlQuery);
+            statement.setInt(1,staff.getID());
+            statement.setString(2,staff.getStaffName());
+            statement.setDate(3, (Date) staff.getDateOfBirth());
+            statement.setFloat(4,staff.getSalary());
+            statement.setString(5,staff.getGender());
+            statement.setString(6,staff.getAddress());
+            statement.setString(7,staff.getPosition());
+            statement.setDate(8,(Date) staff.getStartDate());
+            statement.execute();
+            if(con!=null){
+                System.out.println("Add Success!");
+                con.close();
+            }
+            if(statement!=null){
+                System.out.println("Valid statement!");
+                statement.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void updateStaff(Staff staff) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="Update staff set ID=?,Name=?,DOB=?,Salary=?,Gender=?,Address=?,Position=?,StartDate=? where id=?";
+            statement=con.prepareStatement(sqlQuery);
+            statement.setInt(9,staff.getID());
+            statement.setString(2,staff.getStaffName());
+            statement.setDate(3, (Date) staff.getDateOfBirth());
+            statement.setFloat(4,staff.getSalary());
+            statement.setString(5,staff.getGender());
+            statement.setString(6,staff.getAddress());
+            statement.setString(7,staff.getPosition());
+            statement.setDate(8,(Date) staff.getStartDate());
+            statement.execute();
+            if(con!=null){
+                System.out.println("Update Success!");
+                con.close();
+            }
+            if(statement!=null){
+                System.out.println("Valid statement!");
+                statement.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

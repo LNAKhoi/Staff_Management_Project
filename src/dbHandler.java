@@ -17,26 +17,37 @@ public class dbHandler {
         Connection con=null;
         Statement statement=null;
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=staffManagement;user=sa;password=123456");
+            /*
+            * In this project, we will use MySQL in Xampp to manage the database
+            * port :3306
+            * */
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management","root","");
             String query= "Select * From Staff";
             statement=con.createStatement();
             ResultSet resultSet= statement.executeQuery(query);
             while(resultSet.next()){
                 Staff staff= new Staff(resultSet.getInt("ID"),resultSet.getString("Name"),
-                                        resultSet.getString("DOB"),resultSet.getFloat("Salary"), resultSet.getString("Gender"),
+                                        resultSet.getDate("DOB"),resultSet.getFloat("Salary"), resultSet.getString("Gender"),
                                         resultSet.getString("Address"),resultSet.getString("Position"),resultSet.getDate("StartDate"));
                 staffList.add(staff);
             }
             if(con!=null){
+                System.out.println("Connection available!");
                 con.close();
             }
             if(statement!=null){
+                System.out.println("Valid statement!");
                 statement.close();
             }
         } catch (Exception e){
             e.printStackTrace();
         }
         return staffList;
+    }
+
+    public static void main(String[] args) {
+        List<Staff> temp= new ArrayList<Staff>();
+        temp=getStaff();
     }
 }

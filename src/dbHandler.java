@@ -2,7 +2,6 @@ import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * PACKAGE_NAME
  * Created by Le Nguyen Anh Khoi
@@ -78,16 +77,16 @@ public class dbHandler {
         PreparedStatement statement = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
-            String sqlQuery="Update staff set ID=?,Name=?,DOB=?,Salary=?,Gender=?,Address=?,Position=?,StartDate=? where id=?";
+            String sqlQuery="Update staff set Name=?,DOB=?,Salary=?,Gender=?,Address=?,Position=?,StartDate=? where ID=?";
             statement=con.prepareStatement(sqlQuery);
-            statement.setInt(9,staff.getID());
-            statement.setString(2,staff.getStaffName());
-            statement.setDate(3, (Date) staff.getDateOfBirth());
-            statement.setFloat(4,staff.getSalary());
-            statement.setString(5,staff.getGender());
-            statement.setString(6,staff.getAddress());
-            statement.setString(7,staff.getPosition());
-            statement.setDate(8,(Date) staff.getStartDate());
+            statement.setInt(8,staff.getID());
+            statement.setString(1,staff.getStaffName());
+            statement.setDate(2, (Date) staff.getDateOfBirth());
+            statement.setFloat(3,staff.getSalary());
+            statement.setString(4,staff.getGender());
+            statement.setString(5,staff.getAddress());
+            statement.setString(6,staff.getPosition());
+            statement.setDate(7,(Date) staff.getStartDate());
             statement.execute();
             if(con!=null){
                 System.out.println("Update Success!");
@@ -98,6 +97,26 @@ public class dbHandler {
                 statement.close();
             }
         }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static void deleteStaff(int ID){
+        Connection con=null;
+        PreparedStatement statement= null;
+        try{
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="Delete from staff where ID=?";
+            statement=con.prepareStatement(sqlQuery);
+            statement.setInt(1,ID);
+            statement.execute();
+            if(con!=null){
+                con.close();
+            }
+            if(statement!=null){
+                statement.close();
+            }
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }

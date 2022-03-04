@@ -15,14 +15,22 @@ public class Staff {
     private String Address;
     private String Position;
     private Date startDate;
-
+    private String imgPath;
 
     /*
      * Constructor for staffs
      * */
     public Staff (){}
 
-    public Staff(int ID, String staffName, Date dateOfBirth, Float salary, String gender, String address, String position, Date startDate) {
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public Staff(int ID, String staffName, Date dateOfBirth, Float salary, String gender, String address, String position, Date startDate, String imgPath) {
         this.ID = ID;
         this.staffName = staffName;
         this.dateOfBirth = dateOfBirth;
@@ -30,6 +38,7 @@ public class Staff {
         Gender = gender;
         Address = address;
         Position = position;
+        this.imgPath=imgPath;
         this.startDate = startDate;
     }
 

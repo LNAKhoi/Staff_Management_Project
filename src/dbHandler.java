@@ -28,7 +28,7 @@ public class dbHandler {
             while(resultSet.next()){
                 Staff staff= new Staff(resultSet.getInt("ID"),resultSet.getString("Name"),
                                         resultSet.getDate("DOB"),resultSet.getFloat("Salary"), resultSet.getString("Gender"),
-                                        resultSet.getString("Address"),resultSet.getString("Position"),resultSet.getDate("StartDate"));
+                                        resultSet.getString("Address"),resultSet.getString("Position"),resultSet.getDate("StartDate"),resultSet.getString("imgPath"));
                 staffList.add(staff);
             }
             if(con!=null){
@@ -49,7 +49,7 @@ public class dbHandler {
         PreparedStatement statement = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
-            String sqlQuery="INSERT INTO staff (ID,Name,DOB,Salary,Gender,Address,Position,StartDate) VALUES(?,?,?,?,?,?,?,?)";
+            String sqlQuery="INSERT INTO staff (ID,Name,DOB,Salary,Gender,Address,Position,StartDate,imgPath) VALUES(?,?,?,?,?,?,?,?,?)";
             statement=con.prepareStatement(sqlQuery);
             statement.setInt(1,staff.getID());
             statement.setString(2,staff.getStaffName());
@@ -59,6 +59,7 @@ public class dbHandler {
             statement.setString(6,staff.getAddress());
             statement.setString(7,staff.getPosition());
             statement.setDate(8,(Date) staff.getStartDate());
+            statement.setString(9,staff.getImgPath());
             statement.execute();
             if(con!=null){
                 System.out.println("Add Success!");
@@ -77,9 +78,9 @@ public class dbHandler {
         PreparedStatement statement = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
-            String sqlQuery="Update staff set Name=?,DOB=?,Salary=?,Gender=?,Address=?,Position=?,StartDate=? where ID=?";
+            String sqlQuery="Update staff set Name=?,DOB=?,Salary=?,Gender=?,Address=?,Position=?,StartDate=?, imgPath=? where ID=?";
             statement=con.prepareStatement(sqlQuery);
-            statement.setInt(8,staff.getID());
+            statement.setInt(9,staff.getID());
             statement.setString(1,staff.getStaffName());
             statement.setDate(2, (Date) staff.getDateOfBirth());
             statement.setFloat(3,staff.getSalary());
@@ -87,6 +88,7 @@ public class dbHandler {
             statement.setString(5,staff.getAddress());
             statement.setString(6,staff.getPosition());
             statement.setDate(7,(Date) staff.getStartDate());
+            statement.setString(8,staff.getImgPath());
             statement.execute();
             if(con!=null){
                 System.out.println("Update Success!");
@@ -118,6 +120,17 @@ public class dbHandler {
         }
         catch(Exception e){
             e.printStackTrace();
+        }
+    }
+    public static void addImage(int ID){
+        Connection con=null;
+        PreparedStatement statement= null;
+        try{
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="UPDATE staff  set imgPath=? WHERE ID =? ";
+            statement=con.prepareStatement(sqlQuery);
+        } catch( Exception ex){
+            ex.printStackTrace();
         }
     }
 }

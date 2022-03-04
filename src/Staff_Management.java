@@ -1,17 +1,14 @@
-/**
- * PACKAGE_NAME
- * Created by Le Nguyen Anh Khoi
- * Date 1/12/2022 - 11:58 PM
- * Description: ...
- */
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-/**
- *
- * @author Jason Koi
- */
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -24,8 +21,41 @@ public class Staff_Management extends javax.swing.JFrame {
      */
     public Staff_Management() {
         initComponents();
+        displayData();
     }
-
+    private void displayData(){
+        List<Staff> staffList= null;
+        DefaultTableModel tableModel=  (DefaultTableModel) jTable1.getModel();
+        tableModel.setRowCount(0);
+        try {
+            staffList = dbHandler.getStaff();
+            String strArr[];
+            String temp;
+            for (int i = 0; i < staffList.size(); i++) {
+                int ID= staffList.get(i).getID();
+                String Name= staffList.get(i).getStaffName();
+                Date dob= staffList.get(i).getDateOfBirth();
+                Float salary= staffList.get(i).getSalary();
+                DecimalFormat df= new DecimalFormat("0.00000000000");
+                df.format(salary);
+                String gender= staffList.get(i).getGender();
+                String address= staffList.get(i).getAddress();
+                String position= staffList.get(i).getPosition();
+                Date startDate= staffList.get(i).getStartDate();
+                Object[] data= {ID,Name,dob,salary,address,gender,position,startDate};
+                tableModel.addRow(data);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private String handleDate(String date){
+        if(date.contains("/")){
+            date= date.replace("/","-");
+            return date;
+        }
+        return date;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,10 +140,25 @@ public class Staff_Management extends javax.swing.JFrame {
         startDateInput.setToolTipText("");
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         delButton.setText("Delete");
+        delButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         printButton.setText("Print");
 
@@ -254,7 +299,7 @@ public class Staff_Management extends javax.swing.JFrame {
                         {null, null, null, null, null, null, null}
                 },
                 new String [] {
-                        "ID", "Name", "DOB", "Address", "Gender", "Position", "StartDate"
+                        "ID", "Name", "DOB","Salary" ,"Address", "Gender", "Position", "StartDate"
                 }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -308,6 +353,42 @@ public class Staff_Management extends javax.swing.JFrame {
     }
 
     private void genderBoxActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        try{
+            int ID= Integer.parseInt(idInput.getText());
+            String sName= nameInput.getText();
+            String address= addressInput.getText();
+            Date staffDOB=Date.valueOf(handleDate(dobInput.getText()));
+            String Gender=String.valueOf(genderBox.getSelectedItem());
+            String Address= addressInput.getText();
+            String position= positionInput.getText();
+            Date startingDate=Date.valueOf(handleDate(startDateInput.getText()));
+            Staff newStaff= new Staff(ID,sName,staffDOB,(float)8000000,Gender,Address,position,startingDate);
+            dbHandler.addStaff(newStaff);
+            JOptionPane.showMessageDialog(null,"Successfully Added!");
+            displayData();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void delButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        try{
+            int ID= Integer.parseInt(idInput.getText());
+            dbHandler.deleteStaff(ID);
+            JOptionPane.showMessageDialog(null,"Successfully Deleted!");
+            displayData();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 

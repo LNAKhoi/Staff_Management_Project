@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.io.File;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -460,11 +462,29 @@ public class Staff_Management extends javax.swing.JFrame {
 
     private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {
         try{
-            int ID= Integer.parseInt(idInput.getText());
+            if(idInput.getText()!=null){
+                int ID=Integer.parseInt( idInput.getText());
+
             JFileChooser fileChooser= new JFileChooser();
             FileNameExtensionFilter typeImage= new FileNameExtensionFilter("Supported image type","jpg","png");
             fileChooser.setFileFilter(typeImage);
+            int selected= fileChooser.showOpenDialog(null);
+                if(selected==JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    String getSelectedImage = file.getAbsolutePath();
+                    JOptionPane.showMessageDialog(null, getSelectedImage);
+                    ImageIcon ico = new ImageIcon(getSelectedImage);
+                    Image getFitImg= ico.getImage();
+                    Image fitImg= getFitImg.getScaledInstance(staffImg.getWidth(),staffImg.getHeight(),Image.SCALE_SMOOTH);
 
+                    staffImg.setIcon(new ImageIcon(fitImg));
+
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Please input ID first!");
+
+            }
         }
         catch (Exception e){
             e.printStackTrace();

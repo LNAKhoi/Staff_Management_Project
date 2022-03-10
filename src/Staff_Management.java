@@ -478,7 +478,6 @@ public class Staff_Management extends javax.swing.JFrame {
                     Image fitImg= getFitImg.getScaledInstance(staffImg.getWidth(),staffImg.getHeight(),Image.SCALE_SMOOTH);
                     staffImg.setIcon(new ImageIcon(fitImg));
                     dbHandler.updateStaff(ID,getSelectedImage);
-                    displayData();
                 }
             }
             else{

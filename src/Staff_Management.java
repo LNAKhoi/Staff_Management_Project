@@ -476,14 +476,13 @@ public class Staff_Management extends javax.swing.JFrame {
                     ImageIcon ico = new ImageIcon(getSelectedImage);
                     Image getFitImg= ico.getImage();
                     Image fitImg= getFitImg.getScaledInstance(staffImg.getWidth(),staffImg.getHeight(),Image.SCALE_SMOOTH);
-
                     staffImg.setIcon(new ImageIcon(fitImg));
-
+                    dbHandler.updateStaff(ID,getSelectedImage);
+                    displayData();
                 }
             }
             else{
                 JOptionPane.showMessageDialog(null,"Please input ID first!");
-
             }
         }
         catch (Exception e){

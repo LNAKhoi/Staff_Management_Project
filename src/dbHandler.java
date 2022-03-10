@@ -44,6 +44,7 @@ public class dbHandler {
         }
         return staffList;
     }
+
     public static void addStaff(Staff staff) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -63,6 +64,29 @@ public class dbHandler {
             statement.execute();
             if(con!=null){
                 System.out.println("Add Success!");
+                con.close();
+            }
+            if(statement!=null){
+                System.out.println("Valid statement!");
+                statement.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    // overload function
+    public static void updateStaff(int ID,String imgPath) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="Update staff set imgPath=? where ID=?";
+            statement=con.prepareStatement(sqlQuery);
+            statement.setString(1,imgPath);
+            statement.setInt(2,ID);
+            statement.execute();
+            if(con!=null){
+                System.out.println("Update Success!");
                 con.close();
             }
             if(statement!=null){

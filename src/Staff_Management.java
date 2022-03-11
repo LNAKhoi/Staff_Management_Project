@@ -1,3 +1,5 @@
+import com.mysql.cj.conf.IntegerProperty;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -53,7 +55,6 @@ public class Staff_Management extends javax.swing.JFrame {
         staffImg.setIcon(new ImageIcon("C://Users//Jason Koi//Desktop//Self_Project//StaffManagement_Project//images//prf.png"));
         validate();
     }
-
     // formatting user input for date
     private String handleDate(String date){
         if(date.contains("/")){
@@ -196,7 +197,11 @@ public class Staff_Management extends javax.swing.JFrame {
                 uploadButtonActionPerformed(evt);
             }
         });
-
+        salaryManageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salaryManageButtonActionPerformed(evt);
+            }
+        });
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel10.setText("Image path:");
         jLabel10.setToolTipText("");
@@ -397,7 +402,6 @@ public class Staff_Management extends javax.swing.JFrame {
     private void genderBoxActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             int ID= Integer.parseInt(idInput.getText());
@@ -458,6 +462,12 @@ public class Staff_Management extends javax.swing.JFrame {
 
     private void idInputActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+    }
+    private void salaryManageButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if(idInput.getText()!=null) {
+            new SalaryManagement(Integer.parseInt(idInput.getText())).setVisible(true);
+        }
     }
 
     private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -525,6 +535,7 @@ public class Staff_Management extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
+    public Staff currentStaff;
     private javax.swing.JButton addButton;
     private javax.swing.JTextField addressInput;
     private javax.swing.JButton delButton;

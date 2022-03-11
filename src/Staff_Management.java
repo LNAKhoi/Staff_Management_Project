@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.sql.Date;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class Staff_Management extends javax.swing.JFrame {
     /**
      * Creates new form Staff_Management
      */
+    private HashMap<Integer,String> hashMap= new HashMap<Integer,String>();
     public Staff_Management() {
         initComponents();
         displayData();
@@ -55,6 +57,21 @@ public class Staff_Management extends javax.swing.JFrame {
         staffImg.setIcon(new ImageIcon("C://Users//Jason Koi//Desktop//Self_Project//StaffManagement_Project//images//prf.png"));
         validate();
     }
+    private void convertListToHashMap(){
+        List<Staff> staffList= null;
+        try {
+            staffList = dbHandler.getStaff();
+            for(int i=0;i<staffList.size();i++){
+                String value=staffList.get(i).getStaffName()+","+staffList.get(i).getDateOfBirth()+","+staffList.get(i).getSalary()+","+staffList.get(i).getGender()
+                        +","+staffList.get(i).getAddress()+","+staffList.get(i).getPosition()+","+staffList.get(i).getStartDate()+","+staffList.get(i).getImgPath();
+                hashMap.put(staffList.get(i).getID(),value);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     // formatting user input for date
     private String handleDate(String date){
         if(date.contains("/")){
@@ -465,8 +482,13 @@ public class Staff_Management extends javax.swing.JFrame {
     }
     private void salaryManageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        if(idInput.getText()!=null) {
+        convertListToHashMap();
+        if(idInput.getText()!=null&&hashMap.containsKey(Integer.parseInt(idInput.getText()))==true) {
+
             new SalaryManagement(Integer.parseInt(idInput.getText())).setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"ID not exists!\n");
         }
     }
 

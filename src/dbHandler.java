@@ -1,3 +1,4 @@
+import javax.swing.plaf.nimbus.State;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
@@ -144,17 +145,6 @@ public class dbHandler {
         }
         catch(Exception e){
             e.printStackTrace();
-        }
-    }
-    public static void addImage(int ID){
-        Connection con=null;
-        PreparedStatement statement= null;
-        try{
-            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
-            String sqlQuery="UPDATE staff  set imgPath=? WHERE ID =? ";
-            statement=con.prepareStatement(sqlQuery);
-        } catch( Exception ex){
-            ex.printStackTrace();
         }
     }
 }

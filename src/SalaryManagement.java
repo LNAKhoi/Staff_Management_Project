@@ -1,10 +1,15 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  *
  * @author Jason Koi
  */
 public class SalaryManagement extends javax.swing.JFrame {
-
+    private int staffID;
     /**
      * Creates new form SalaryManagement
      */
@@ -14,15 +19,28 @@ public class SalaryManagement extends javax.swing.JFrame {
     }
 
     public SalaryManagement(int ID) {
-
+        this.staffID=ID;
+        System.out.println(ID);
+        initComponents();
+        handlingSalary();
     }
 
     public void handlingSalary(){
-        Staff_Management s= new Staff_Management();
-        displayID.setText(String.valueOf((s.currentStaff.getID())));
-        displayName.setText(s.currentStaff.getStaffName());
-        displayPos.setText(s.currentStaff.getPosition());
-        displaySalary.setText(String.valueOf(s.currentStaff.getSalary()));
+        try{
+            if(String.valueOf(this.staffID)!=null){
+                Staff staff= new Staff();
+                staff=dbHandler.getAStaff(this.staffID);
+                displayName.setText(staff.getStaffName());
+                displayID.setText(String.valueOf(staff.getID()));
+                displaySalary.setText(String.valueOf(staff.getSalary()));
+                displayPos.setText(staff.getPosition());
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"Error! Staff doesn't exist!");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

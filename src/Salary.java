@@ -5,7 +5,7 @@
  * Description: ...
  */
 public class Salary extends Staff {
-    long hardSalary;
+    long hardSalary=5000000;
     int bonus;
     int absentDays;
     float taxes;
@@ -80,7 +80,8 @@ public class Salary extends Staff {
         this.finalSalary = finalSalary;
     }
     public void finalSalaryCalculation(Staff staff){
-        finalSalary= (long) (hardSalary+bonus+otHours*120000-absentDays*250000-taxes);
+        long temp=(long) (hardSalary+bonus+otHours*120000-absentDays*250000);
+        finalSalary= (long) (temp-taxes*temp);
         staff.setSalary((float)finalSalary);
     }
 }

@@ -98,6 +98,28 @@ public class dbHandler {
             e.printStackTrace();
         }
     }
+    public static void updateStaff(int ID,float salary) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/staff_management", "root", "");
+            String sqlQuery="Update staff set Salary=? where ID=?";
+            statement=con.prepareStatement(sqlQuery);
+            statement.setFloat(1,salary);
+            statement.setInt(2,ID);
+            statement.execute();
+            if(con!=null){
+                System.out.println("Update Success!");
+                con.close();
+            }
+            if(statement!=null){
+                System.out.println("Valid statement!");
+                statement.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     public static void updateStaff(Staff staff) {
         Connection con = null;
         PreparedStatement statement = null;

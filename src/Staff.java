@@ -71,7 +71,7 @@ public class Staff {
     }
 
     public void setSalary(Float salary) {
-        Salary = salary;
+        this.Salary = salary;
     }
 
     public String getGender() {

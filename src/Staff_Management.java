@@ -463,7 +463,10 @@ public class Staff_Management extends javax.swing.JFrame {
             String position= positionInput.getText();
             Date startingDate=Date.valueOf(handleDate(startDateInput.getText()));
             String path= pathInput.getText();
-            Staff newStaff= new Staff(ID,sName,staffDOB,(float)5000000,Gender,Address,position,startingDate,path);
+            Staff newStaff= new Staff(ID,sName,staffDOB,(float)400,Gender,Address,position,startingDate,path);
+            Salary salary= new Salary();
+            salary.setHardSalary(newStaff);
+
             dbHandler.addStaff(newStaff);
             JOptionPane.showMessageDialog(null,"Successfully Added!");
             clearField();
@@ -484,13 +487,11 @@ public class Staff_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
         convertListToHashMap();
         String getID= idInput.getText();
-        if(getID.equals("")){
+        if(getID.equals("")|| hashMap.containsKey(Integer.parseInt(idInput.getText())) == false){
             JOptionPane.showMessageDialog(null,"ID not exists!\n");
         }
         else {
-            if (hashMap.containsKey(Integer.parseInt(idInput.getText())) == true) {
                 new SalaryManagement(Integer.parseInt(idInput.getText())).setVisible(true);
-            }
         }
     }
 

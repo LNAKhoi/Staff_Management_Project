@@ -37,7 +37,27 @@ public class Salary extends Staff {
     }
 
     public void setHardSalary(long hardSalary) {
-        this.hardSalary = hardSalary;
+        if(this.getPosition().equals("Data Analysis")){
+            this.hardSalary=12000000;
+        }
+        else if(this.getPosition().equals("Data Science")){
+            this.hardSalary=22450000;
+        }
+        else if(this.getPosition().equals("FrontEnd Developer")){
+            this.hardSalary=11500000;
+        }
+        else if(this.getPosition().equals("BackEnd Developer")){
+            this.hardSalary=12500000;
+        }
+        else if(this.getPosition().equals("AI Engineering")){
+            this.hardSalary=26400000;
+        }
+        else if(this.getPosition().contains("Internship")){
+            this.hardSalary=45000000;
+        }
+        else{
+            this.hardSalary=hardSalary;
+        }
     }
 
     public int getBonus() {
@@ -61,7 +81,18 @@ public class Salary extends Staff {
     }
 
     public void setTaxes(float taxes) {
-        this.taxes = taxes;
+        if(hardSalary<11000000){
+            taxes=0;
+        }
+        else if(hardSalary>11000000&& hardSalary<21000000){
+            taxes=0.05f;
+        }
+        else if( hardSalary>=21000000){
+            taxes=0.1f;
+        }
+        else{
+            this.taxes=taxes;
+        }
     }
 
     public int getOtHours() {

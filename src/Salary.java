@@ -5,14 +5,15 @@
  * Description: ...
  */
 public class Salary extends Staff {
-    long hardSalary=5000000;
-    int bonus;
-    int absentDays;
-    float taxes;
-    int otHours;
+    long hardSalary=500;
+    int bonus=0;
+    int absentDays=0;
+    float taxes=0;
+    int otHours=0;
     long finalSalary;
     String level;
     public Salary(){
+
     }
     public Salary(long hardSalary, int bonus, int absentDays, float taxes, int otHours, long finalSalary, String level) {
         this.hardSalary = hardSalary;
@@ -36,28 +37,29 @@ public class Salary extends Staff {
         return hardSalary;
     }
 
+    public void setHardSalary(Staff staff) {
+        if(staff.getPosition().equals("Data Analysis")){
+            staff.setSalary((float)550);
+        }
+        else if(staff.getPosition().equals("Data Science")){
+            staff.setSalary((float)980);
+        }
+        else if(staff.getPosition().equals("Frontend Developer")){
+            staff.setSalary((float)505);
+        }
+        else if(staff.getPosition().equals("Backend Developer")){
+            staff.setSalary((float)545);
+        }
+        else if(staff.getPosition().equals("AI Engineering")){
+            staff.setSalary((float)1150);
+        }
+        else if(staff.getPosition().contains("Internship")){
+            staff.setSalary((float)2000);
+        }
+    }
+
     public void setHardSalary(long hardSalary) {
-        if(this.getPosition().equals("Data Analysis")){
-            this.hardSalary=12000000;
-        }
-        else if(this.getPosition().equals("Data Science")){
-            this.hardSalary=22450000;
-        }
-        else if(this.getPosition().equals("FrontEnd Developer")){
-            this.hardSalary=11500000;
-        }
-        else if(this.getPosition().equals("BackEnd Developer")){
-            this.hardSalary=12500000;
-        }
-        else if(this.getPosition().equals("AI Engineering")){
-            this.hardSalary=26400000;
-        }
-        else if(this.getPosition().contains("Internship")){
-            this.hardSalary=45000000;
-        }
-        else{
-            this.hardSalary=hardSalary;
-        }
+        this.hardSalary = hardSalary;
     }
 
     public int getBonus() {
@@ -80,18 +82,15 @@ public class Salary extends Staff {
         return taxes;
     }
 
-    public void setTaxes(float taxes) {
-        if(hardSalary<11000000){
-            taxes=0;
+    public void setTaxes(Staff staff) {
+        if(staff.getSalary()<=500){
+            this.taxes=0;
         }
-        else if(hardSalary>11000000&& hardSalary<21000000){
-            taxes=0.05f;
+        else if(staff.getSalary()>500&& staff.getSalary()<1000){
+            this.taxes=0.05f;
         }
-        else if( hardSalary>=21000000){
-            taxes=0.1f;
-        }
-        else{
-            this.taxes=taxes;
+        else if( staff.getSalary()>=1000){
+            this.taxes=0.1f;
         }
     }
 
@@ -111,8 +110,8 @@ public class Salary extends Staff {
         this.finalSalary = finalSalary;
     }
     public void finalSalaryCalculation(Staff staff){
-        long temp=(long) (hardSalary+bonus+otHours*120000-absentDays*250000);
-        finalSalary= (long) (temp-taxes*temp);
+        long temp=(long) (staff.getSalary()+this.bonus+this.otHours*15-this.absentDays*20);
+        finalSalary= (long) (temp-this.taxes*temp);
         staff.setSalary((float)finalSalary);
     }
 }

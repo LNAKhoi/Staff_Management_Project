@@ -483,12 +483,14 @@ public class Staff_Management extends javax.swing.JFrame {
     private void salaryManageButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         convertListToHashMap();
-        if(idInput.getText()!=null&&hashMap.containsKey(Integer.parseInt(idInput.getText()))==true) {
-
-            new SalaryManagement(Integer.parseInt(idInput.getText())).setVisible(true);
-        }
-        else{
+        String getID= idInput.getText();
+        if(getID.equals("")){
             JOptionPane.showMessageDialog(null,"ID not exists!\n");
+        }
+        else {
+            if (hashMap.containsKey(Integer.parseInt(idInput.getText())) == true) {
+                new SalaryManagement(Integer.parseInt(idInput.getText())).setVisible(true);
+            }
         }
     }
 
